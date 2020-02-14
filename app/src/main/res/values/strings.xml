@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">NewsViewsV2</string>
+    <string name="navi_open">open</string>
+    <string name="navi_close">close</string>
 </resources>
