@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.widget.Toast;
 
@@ -33,6 +34,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private NewsAdapter adapter;
 
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -41,9 +43,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         drawerLayout = findViewById(R.id.drawerID);
         recyclerView = findViewById(R.id.newsRecyclerView);
         NavigationView navigationView = findViewById(R.id.navigationID);
-
-
-
         navigationView.setNavigationItemSelectedListener(this);
         drawerToggle = new ActionBarDrawerToggle(this,
                 drawerLayout,
@@ -55,11 +54,48 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
 
+
+
+/*
         NewsService newsService = RetrofitClient
                 .getClient(baseUrl)
                 .create(NewsService.class);
+        newsService.getNewsResponse()
+                .enqueue(new Callback<NewsResponse>() {
+                    @Override
+                    public void onResponse(Call<NewsResponse> call, Response<NewsResponse> response) {
+                        if(response.isSuccessful()){
+                            NewsResponse newsResponse = response.body();
+                            LinearLayoutManager linearLayoutManager =  new LinearLayoutManager(MainActivity.this);
+                            adapter = new NewsAdapter(MainActivity.this, newsResponse);
+                            linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
+                            recyclerView.setLayoutManager(linearLayoutManager);
+                            recyclerView.setAdapter(adapter);
+                            Toast.makeText(MainActivity.this, ""+newsResponse.getTotalResults(), Toast.LENGTH_SHORT).show();
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<NewsResponse> call, Throwable t) {
+                        Log.e("onFailure: ",t.getLocalizedMessage());
+                    }
+                });
+*/
 
 
+
+        getApi();
+
+
+    }
+
+
+
+    public void getApi(){
+
+        NewsService newsService = RetrofitClient
+                .getClient(baseUrl)
+                .create(NewsService.class);
         newsService.getNewsResponse()
                 .enqueue(new Callback<NewsResponse>() {
                     @Override
@@ -83,8 +119,12 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     }
 
-
-
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.main_menu,menu);
+        return true;
+    }
 
     @Override
     public boolean onPrepareOptionsMenu(Menu menu) {
@@ -94,9 +134,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-       /* if(drawerToggle.onOptionsItemSelected(item)){
-            return  true;
-        }*/
+
         switch (item.getItemId()){
             case R.id.refresh:
                 Toast.makeText(this, "Refresh", Toast.LENGTH_SHORT).show();
@@ -104,12 +142,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 break;
             case R.id.Home:
                 Toast.makeText(this, "clicked", Toast.LENGTH_SHORT).show();
+                break;
 
-            case R.id.about:
-                Toast.makeText(this, "clicked", Toast.LENGTH_SHORT).show();
 
-            case R.id.login:
-                Toast.makeText(this, "clicked", Toast.LENGTH_SHORT).show();
         }
         return super.onOptionsItemSelected(item);
     }
