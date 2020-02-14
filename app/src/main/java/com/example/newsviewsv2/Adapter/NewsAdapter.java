@@ -16,15 +16,13 @@ import com.squareup.picasso.Picasso;
 
 public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.NewsViewHolder>{
 
-    private Context context;
-    private NewsResponse newsResponse;
+ private Context context;
+ private NewsResponse newsResponse;
 
     public NewsAdapter(Context context, NewsResponse newsResponse) {
         this.context = context;
         this.newsResponse = newsResponse;
     }
-
-
 
     @NonNull
     @Override
@@ -48,7 +46,8 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.NewsViewHolder
 
     @Override
     public int getItemCount() {
-        return 0;
+
+        return newsResponse.getArticles().size();
     }
 
     public class NewsViewHolder extends RecyclerView.ViewHolder{

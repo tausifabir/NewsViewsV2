@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
@@ -28,10 +29,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     private DrawerLayout drawerLayout;
     private ActionBarDrawerToggle drawerToggle;
-
     private RecyclerView recyclerView;
     private NewsAdapter adapter;
-    NewsResponse newsResponse;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,7 +42,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         recyclerView = findViewById(R.id.newsRecyclerView);
         NavigationView navigationView = findViewById(R.id.navigationID);
 
-        newsResponse = new NewsResponse();
 
 
         navigationView.setNavigationItemSelectedListener(this);
@@ -56,40 +55,35 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
 
-        setAdapter();
-        getApi();
-    }
-
-
-
-
-    public void setAdapter(){
-
-        LinearLayoutManager linearLayoutManager =  new LinearLayoutManager(MainActivity.this);
-        adapter = new NewsAdapter(this, newsResponse);
-        linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
-        recyclerView.setLayoutManager(linearLayoutManager);
-        recyclerView.setAdapter(adapter);
-    }
-
-    public void getApi(){
-        NewsService newsService = RetrofitClient.getClient(baseUrl)
+        NewsService newsService = RetrofitClient
+                .getClient(baseUrl)
                 .create(NewsService.class);
+
+
         newsService.getNewsResponse()
                 .enqueue(new Callback<NewsResponse>() {
                     @Override
                     public void onResponse(Call<NewsResponse> call, Response<NewsResponse> response) {
-                        if (response.isSuccessful()){
-                            newsResponse = response.body();
+                        if(response.isSuccessful()){
+                            NewsResponse newsResponse = response.body();
+                            LinearLayoutManager linearLayoutManager =  new LinearLayoutManager(MainActivity.this);
+                            adapter = new NewsAdapter(MainActivity.this, newsResponse);
+                            linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
+                            recyclerView.setLayoutManager(linearLayoutManager);
+                            recyclerView.setAdapter(adapter);
+                            Toast.makeText(MainActivity.this, ""+newsResponse.getTotalResults(), Toast.LENGTH_SHORT).show();
                         }
                     }
 
                     @Override
                     public void onFailure(Call<NewsResponse> call, Throwable t) {
-
+                        Log.e("onFailure: ",t.getLocalizedMessage());
                     }
                 });
+
     }
+
+
 
 
     @Override
@@ -106,7 +100,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         switch (item.getItemId()){
             case R.id.refresh:
                 Toast.makeText(this, "Refresh", Toast.LENGTH_SHORT).show();
-                getApi();
                 adapter.notifyDataSetChanged();
                 break;
             case R.id.Home:
