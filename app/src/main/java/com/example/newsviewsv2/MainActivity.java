@@ -6,6 +6,9 @@ import android.os.Bundle;
 
 public class MainActivity extends AppCompatActivity {
 
+
+    public  static final String baseUrl ="https://newsapi.org/";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
