@@ -5,6 +5,6 @@ import retrofit2.http.GET;
 
 public interface NewsService {
 
-   @GET("v2/everything?q=bitcoin&from=2020-01-14&sortBy=publishedAt&apiKey=1719a60abc8047b18d9f22b5342a7fe5")
+   @GET("v2/everything?q=bitcoin&from=2020-01-16&sortBy=publishedAt&apiKey=bb6f8c3519e74813b3b09d038f8ac9dd")
     Call<NewsResponse> getNewsResponse();
 }

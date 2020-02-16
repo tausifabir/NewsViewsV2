@@ -10,6 +10,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.newsviewsv2.MainActivity;
 import com.example.newsviewsv2.NewsApi.NewsResponse;
 import com.example.newsviewsv2.R;
 import com.squareup.picasso.Picasso;
