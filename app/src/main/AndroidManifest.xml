@@ -3,6 +3,7 @@
     package="com.example.newsviewsv2">
 
     <uses-permission android:name="android.permission.INTERNET" />
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -10,14 +11,15 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".SplashScreen.SplashThirdAcitivity"
-            android:theme="@style/AppThemeNoActionBar"></activity>
-
-        <activity android:name=".SplashScreen.SplashSecondAcitivity"
-            android:theme="@style/AppThemeNoActionBar"></activity>
-
-
-        <activity android:name=".SplashScreen.SplashfirstAcitivity"
+        <activity android:name=".NewsItem"></activity>
+        <activity
+            android:name=".SplashScreen.SplashThirdAcitivity"
+            android:theme="@style/AppThemeNoActionBar" />
+        <activity
+            android:name=".SplashScreen.SplashSecondAcitivity"
+            android:theme="@style/AppThemeNoActionBar" />
+        <activity
+            android:name=".SplashScreen.SplashfirstAcitivity"
             android:theme="@style/AppThemeNoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -25,10 +27,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
-
-
-        <activity android:name=".MainActivity"></activity>
+        <activity android:name=".MainActivity" />
     </application>
 
 </manifest>

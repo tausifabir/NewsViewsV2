@@ -12,6 +12,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.Toast;
 
 import com.example.newsviewsv2.Adapter.NewsAdapter;
@@ -69,6 +70,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                             recyclerView.setLayoutManager(linearLayoutManager);
                             recyclerView.setAdapter(newsAdapter);
                             Toast.makeText(MainActivity.this, ""+newsResponse.getTotalResults(), Toast.LENGTH_SHORT).show();
+
+
+
 
                         }
                     }
