@@ -3,12 +3,14 @@ package com.example.newsviewsv2;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -30,7 +32,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     public  static final String baseUrl ="https://newsapi.org/";
 
     private DrawerLayout drawerLayout;
-    private ActionBarDrawerToggle drawerToggle;
+    ActionBarDrawerToggle drawerToggle;
     private RecyclerView recyclerView;
     private NewsAdapter newsAdapter;
 
@@ -45,6 +47,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         recyclerView = findViewById(R.id.newsRecyclerView);
         NavigationView navigationView = findViewById(R.id.navigationID);
         navigationView.setNavigationItemSelectedListener(this);
+        navigationView.bringToFront();
         drawerToggle = new ActionBarDrawerToggle(this,
                 drawerLayout,
                 R.string.navi_open,
@@ -52,6 +55,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         drawerLayout.addDrawerListener(drawerToggle);
         drawerToggle.syncState();
 
+        navigationView.setCheckedItem(R.id.Home);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
 
@@ -118,6 +122,29 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-        return false;
+
+        int id = item.getItemId();
+
+        if(id == R.id.Home){
+            Toast.makeText(this, "Home", Toast.LENGTH_SHORT).show();
+        }else if(id == R.id.about){
+            Toast.makeText(this, "about", Toast.LENGTH_SHORT).show();
+        }else if(id == R.id.login){
+            Toast.makeText(this, "login", Toast.LENGTH_SHORT).show();
+        }else if(id == R.id.exit){
+            Toast.makeText(this, "exit", Toast.LENGTH_SHORT).show();
+        }
+        drawerLayout.closeDrawer(GravityCompat.START);
+        return true;
     }
+
+    @Override
+    public void onBackPressed() {
+
+        if(drawerLayout.isDrawerOpen(GravityCompat.START)){
+            drawerLayout.closeDrawer(GravityCompat.START);
+        }else
+            super.onBackPressed();
+        }
+
 }
