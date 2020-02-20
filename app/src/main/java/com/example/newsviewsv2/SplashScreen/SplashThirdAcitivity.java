@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.WindowManager;
 import android.widget.TextView;
 
 import com.example.newsviewsv2.MainActivity;
@@ -22,9 +23,9 @@ public class SplashThirdAcitivity extends AppCompatActivity {
         setContentView(R.layout.activity_splash_third_acitivity);
 
 
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,WindowManager.LayoutParams.FLAG_FULLSCREEN);
         Intent intent = getIntent();
         helloTV = findViewById(R.id.hello);
-        nameTV = findViewById(R.id.name);
 
 
 

@@ -10,11 +10,11 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
 import android.util.Log;
-import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.Toast;
 
 import com.example.newsviewsv2.Adapter.NewsAdapter;
@@ -43,8 +43,12 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        drawerLayout = findViewById(R.id.drawerID);
+
         recyclerView = findViewById(R.id.newsRecyclerView);
+
+
+        /////******** Drawerlayout Code******** ////
+        drawerLayout = findViewById(R.id.drawerID);
         NavigationView navigationView = findViewById(R.id.navigationID);
         navigationView.setNavigationItemSelectedListener(this);
         navigationView.bringToFront();
@@ -54,11 +58,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 R.string.navi_close);
         drawerLayout.addDrawerListener(drawerToggle);
         drawerToggle.syncState();
-
         navigationView.setCheckedItem(R.id.Home);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
 
+        //******** Retrofit Api Get method ******** //
         NewsService newsService = RetrofitClient
                 .getClient(baseUrl)
                 .create(NewsService.class);
@@ -69,7 +73,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                         if(response.isSuccessful()){
                             NewsResponse newsResponse = response.body();
                             LinearLayoutManager linearLayoutManager =  new LinearLayoutManager(MainActivity.this);
-                            NewsAdapter newsAdapter = new NewsAdapter(MainActivity.this,newsResponse);
+                            newsAdapter = new NewsAdapter(MainActivity.this,newsResponse);
                             linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
                             recyclerView.setLayoutManager(linearLayoutManager);
                             recyclerView.setAdapter(newsAdapter);
@@ -107,6 +111,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
 
+        if(drawerToggle.onOptionsItemSelected(item)){
+            return true;
+        }
         switch (item.getItemId()){
             case R.id.refresh:
                 Toast.makeText(this, "Refresh", Toast.LENGTH_SHORT).show();

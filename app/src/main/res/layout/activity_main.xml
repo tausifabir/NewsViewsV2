@@ -13,8 +13,8 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:id="@+id/navigationID"
-        app:menu="@menu/navi_menu"
         android:layout_gravity="start"
+        app:menu="@menu/navigation_menu"
         app:headerLayout="@layout/navigation_header"
         >
 

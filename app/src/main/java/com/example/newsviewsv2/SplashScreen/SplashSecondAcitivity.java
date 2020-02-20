@@ -4,6 +4,8 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.WindowManager;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.newsviewsv2.R;
@@ -13,12 +15,15 @@ public class SplashSecondAcitivity extends AppCompatActivity {
 
     private TextView showText;
     private int progressUp;
+    private ImageView newsImage;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash_second_acitivity);
+        newsImage = findViewById(R.id.newsIconID);
 
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,WindowManager.LayoutParams.FLAG_FULLSCREEN);
         Intent intent = getIntent();
         showText = findViewById(R.id.showTV);
 

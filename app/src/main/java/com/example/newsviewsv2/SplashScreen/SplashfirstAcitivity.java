@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.WindowManager;
 import android.widget.ProgressBar;
 
 import com.example.newsviewsv2.R;
@@ -18,9 +19,10 @@ public class SplashfirstAcitivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splashfirst_acitivity);
-        progressBar = findViewById(R.id.appProgressBar);
+        progressBar = findViewById(R.id.ProgressBar);
 
 
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
         Thread thread = new Thread(new Runnable() {
             @Override
@@ -28,8 +30,6 @@ public class SplashfirstAcitivity extends AppCompatActivity {
                 doWork();
                 startApp();
             }
-
-
         });
 
         thread.start();
