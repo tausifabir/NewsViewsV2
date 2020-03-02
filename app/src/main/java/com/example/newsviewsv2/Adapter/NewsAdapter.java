@@ -7,12 +7,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.newsviewsv2.NewsApi.NewsResponse;
+import com.example.newsviewsv2.NewsApi.Source;
 import com.example.newsviewsv2.NewsItem;
 import com.example.newsviewsv2.R;
 import com.squareup.picasso.Picasso;
@@ -26,6 +26,8 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.NewsViewHolder
         this.context = context;
         this.newsResponse = newsResponse;
     }
+
+
 
     @NonNull
     @Override
@@ -43,7 +45,8 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.NewsViewHolder
         holder.titleTV.setText(newsResponse.getArticles().get(position).getTitle());
         holder.descripTV.setText(newsResponse.getArticles().get(position).getDescription());
         holder.publishTV.setText(newsResponse.getArticles().get(position).getPublishedAt());
-        holder.urlTV.setText(newsResponse.getArticles().get(position).getUrl());
+
+        holder.timeTV.setText(newsResponse.getArticles().get(position).getPublishedAt());
         Picasso.get().load(newsResponse.getArticles().get(position).getUrlToImage()).into(holder.imageViewID);
 
 
@@ -57,7 +60,7 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.NewsViewHolder
                 String Descrip = newsResponse.getArticles().get(position).getDescription();
                 String Content = newsResponse.getArticles().get(position).getContent();
                 String PublishDate = newsResponse.getArticles().get(position).getPublishedAt();
-                String Url = newsResponse.getArticles().get(position).getUrl();
+
 
                 Intent intent = new Intent(context,NewsItem.class)
                         .putExtra("image",ImageView)
@@ -65,8 +68,7 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.NewsViewHolder
                         .putExtra("title",Title)
                         .putExtra("des",Descrip)
                         .putExtra("content",Content)
-                        .putExtra("pub",PublishDate)
-                        .putExtra("url",Url);
+                        .putExtra("pub",PublishDate);
                 context.startActivity(intent);
             }
         });
@@ -81,7 +83,7 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.NewsViewHolder
     public class NewsViewHolder extends RecyclerView.ViewHolder{
 
         ImageView imageViewID;
-        TextView authorTV,titleTV,descripTV, publishTV,urlTV;
+        TextView authorTV,titleTV,descripTV, publishTV, sourceTV,timeTV;
 
         public NewsViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -90,7 +92,7 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.NewsViewHolder
             titleTV = itemView.findViewById(R.id.titleID);
             descripTV = itemView.findViewById(R.id.descriptionID);
             publishTV = itemView.findViewById(R.id.publishDateID);
-            urlTV = itemView.findViewById(R.id.urlID);
+            timeTV = itemView.findViewById(R.id.TimeID);
 
         }
     }

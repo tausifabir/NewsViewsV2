@@ -13,13 +13,12 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.view.View;
-import android.view.WindowManager;
 import android.widget.Toast;
 
 import com.example.newsviewsv2.Adapter.NewsAdapter;
 import com.example.newsviewsv2.NewsApi.NewsResponse;
 import com.example.newsviewsv2.NewsApi.NewsService;
+import com.example.newsviewsv2.SharedPreference.UserPreference;
 import com.google.android.material.navigation.NavigationView;
 
 import retrofit2.Call;
@@ -36,6 +35,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private RecyclerView recyclerView;
     private NewsAdapter newsAdapter;
 
+    private UserPreference userPreference;
 
 
     @Override
@@ -62,6 +62,14 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
 
+
+        //*******SharedPreference**********//
+
+        userPreference = new UserPreference(this);
+
+        userPreference.setLoginStatus(false);
+
+
         //******** Retrofit Api Get method ******** //
         NewsService newsService = RetrofitClient
                 .getClient(baseUrl)
@@ -80,14 +88,15 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                             Toast.makeText(MainActivity.this, ""+newsResponse.getTotalResults(), Toast.LENGTH_SHORT).show();
 
 
-
-
+                        }else{
+                            Toast.makeText(MainActivity.this, "Api key experied ", Toast.LENGTH_SHORT).show();
                         }
                     }
 
                     @Override
                     public void onFailure(Call<NewsResponse> call, Throwable t) {
                         Log.e("onFailure: ",t.getLocalizedMessage());
+
                     }
                 });
 
@@ -104,6 +113,16 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     @Override
     public boolean onPrepareOptionsMenu(Menu menu) {
+
+
+        MenuItem loginItem = menu.findItem(R.id.login);
+        MenuItem logoutItem = menu.findItem(R.id.logout);
+
+        if(userPreference.getLoginStatus()){
+            loginItem.setVisible(false);
+            logoutItem.setVisible(true);
+
+        }
         return super.onPrepareOptionsMenu(menu);
     }
 
@@ -122,7 +141,15 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 Toast.makeText(this, "clicked", Toast.LENGTH_SHORT).show();
                 break;
 
+            case R.id.logout:
+                //userPreference.setLoginStatus(false);
+                Toast.makeText(this, "logout", Toast.LENGTH_SHORT).show();
+                break;
+            case R.id.login:
+                userPreference.setLoginStatus(true);
 
+                Toast.makeText(this, "logout", Toast.LENGTH_SHORT).show();
+                break;
         }
         return super.onOptionsItemSelected(item);
     }
@@ -137,7 +164,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         }else if(id == R.id.about){
             Toast.makeText(this, "about", Toast.LENGTH_SHORT).show();
         }else if(id == R.id.login){
-            Toast.makeText(this, "login", Toast.LENGTH_SHORT).show();
+            userPreference.setLoginStatus(true);
         }else if(id == R.id.exit){
             Toast.makeText(this, "exit", Toast.LENGTH_SHORT).show();
         }
@@ -153,5 +180,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         }else
             super.onBackPressed();
         }
+
 
 }

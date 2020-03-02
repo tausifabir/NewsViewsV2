@@ -12,7 +12,7 @@ import com.squareup.picasso.Picasso;
 
 public class NewsItem extends AppCompatActivity {
 
-    private TextView authorTV,titleTV,descripTV, publishTV,urlTV,contentTV;
+    private TextView authorTV,titleTV,descripTV, publishTV, sourceTV,contentTV;
     private ImageView imageViewID;
     NewsResponse newsResponse;
 
@@ -25,7 +25,6 @@ public class NewsItem extends AppCompatActivity {
         titleTV = findViewById(R.id.titleID);
         descripTV = findViewById(R.id.descriptionID);
         publishTV = findViewById(R.id.publishDateID);
-        urlTV = findViewById(R.id.urlID);
         contentTV = findViewById(R.id.contentID);
 
         newsResponse = new NewsResponse();
@@ -37,7 +36,6 @@ public class NewsItem extends AppCompatActivity {
         String Title = intent.getStringExtra("title");
         String Description = intent.getStringExtra("des");
         String PublishDate = intent.getStringExtra("pub");
-        String URL = intent.getStringExtra("url");
         String Content = intent.getStringExtra("content");
 
 
@@ -47,7 +45,6 @@ public class NewsItem extends AppCompatActivity {
         titleTV.setText(Title);
         descripTV.setText(Description);
         publishTV.setText(PublishDate);
-        urlTV.setText(URL);
         contentTV.setText(Content);
 
     }
